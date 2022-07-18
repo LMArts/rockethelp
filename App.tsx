@@ -9,6 +9,7 @@ import {
 import { LoginScreen } from './src/screens/auth/login';
 import { THEME } from './src/styles/theme';
 import { Loading } from './src/components/loading';
+import { HomeScreen } from './src/screens/home';
 
 export default function App() {
   const [fontLoad] = useFonts({Roboto_400Regular, Roboto_700Bold});
@@ -20,7 +21,7 @@ export default function App() {
         backgroundColor='transparent'
         translucent
       />
-      {fontLoad ? <LoginScreen/> : <Loading/>}
+      {fontLoad ? <HomeScreen/> : <Loading/>}
     </NativeBaseProvider>
   );
 }
