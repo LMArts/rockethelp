@@ -10,6 +10,8 @@ import { LoginScreen } from './src/screens/auth/login';
 import { THEME } from './src/styles/theme';
 import { Loading } from './src/components/loading';
 import { HomeScreen } from './src/screens/home';
+import { RegisterScreen } from './src/screens/auth/register';
+import { Routes } from './src/routes';
 
 export default function App() {
   const [fontLoad] = useFonts({Roboto_400Regular, Roboto_700Bold});
@@ -21,7 +23,7 @@ export default function App() {
         backgroundColor='transparent'
         translucent
       />
-      {fontLoad ? <HomeScreen/> : <Loading/>}
+      {fontLoad ? <Routes/> : <Loading/>}
     </NativeBaseProvider>
   );
 }

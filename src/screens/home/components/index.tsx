@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Center, FlatList, Heading, HStack, Icon, IconButton, Text, useTheme, VStack } from 'native-base';
 import {Entypo, Ionicons} from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native';
 
 import Logo from '../../../assets/logo_secondary.svg';
 import { Filters } from '../../../components/filters';
@@ -10,9 +11,24 @@ import { Button } from '../../../components/button';
 export function Home() {
 
   const [statusSelect, setStatusSelect] = useState<'open' | 'closed'>('open');
-  const [ordens, setOrdens] = useState<OrderProps[]>([])
+  const [ordens, setOrdens] = useState<OrderProps[]>([
+    {
+      id: '123',
+      patrimony: '12345',
+      when: '18/07/2022 às 22:00',
+      status: 'open'
+    }
+  ])
 
+  const navigation = useNavigation();
   const {colors} = useTheme();
+
+  const handleNavigationRegister = () => {
+    navigation.navigate('register')
+  }
+  const handleNavigationDetails = (orderId: string) => {
+    navigation.navigate('details', {orderId})
+  }
 
   return (
     <VStack
@@ -70,7 +86,7 @@ export function Home() {
         <FlatList
           data={ordens}
           keyExtractor={item => item.id}
-          renderItem={({item}) => <Orders data={item} />}
+          renderItem={({item}) => <Orders data={item} onPress={()=>handleNavigationDetails(item.id)}/>}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: 10}}
           ListEmptyComponent={()=> (
@@ -84,7 +100,7 @@ export function Home() {
           )}
         />
 
-        <Button title='Nova solicitação'/>
+        <Button title='Nova solicitação' onPress={()=>handleNavigationRegister()}/>
 
       </VStack>
     </VStack>
