@@ -1,20 +1,16 @@
 import { useState } from 'react';
-import { FlatList, Heading, HStack, IconButton, Text, useTheme, VStack } from 'native-base';
-import {Entypo} from '@expo/vector-icons'
+import { Center, FlatList, Heading, HStack, Icon, IconButton, Text, useTheme, VStack } from 'native-base';
+import {Entypo, Ionicons} from '@expo/vector-icons'
 
 import Logo from '../../../assets/logo_secondary.svg';
 import { Filters } from '../../../components/filters';
 import { Orders, OrderProps } from '../../../components/orders';
+import { Button } from '../../../components/button';
 
 export function Home() {
 
   const [statusSelect, setStatusSelect] = useState<'open' | 'closed'>('open');
-  const [ordens, setOrdens] = useState<OrderProps[]>([{
-    id: '123',
-    patrimony: '123456',
-    when: '18/07/2022 at 10:00',
-    status: 'open'
-  }])
+  const [ordens, setOrdens] = useState<OrderProps[]>([])
 
   const {colors} = useTheme();
 
@@ -75,7 +71,20 @@ export function Home() {
           data={ordens}
           keyExtractor={item => item.id}
           renderItem={({item}) => <Orders data={item} />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingBottom: 10}}
+          ListEmptyComponent={()=> (
+            <Center>
+              <Icon size={10} as={<Ionicons name='chatbubbles-outline' color={colors.gray[300]} />} />
+              <Text color={colors.gray[300]} fontSize='md' mt={4} textAlign='center'>
+                Você ainda não possui {'\n'} 
+                solicitações {statusSelect === 'open' ? 'em andamento' : 'finalizadas'}
+              </Text>
+            </Center>
+          )}
         />
+
+        <Button title='Nova solicitação'/>
 
       </VStack>
     </VStack>
