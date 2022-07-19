@@ -58,12 +58,12 @@ export function Home() {
           alignItems='center'
         >
           <Heading color='gray.100'>
-            Meus chamados
+            Solicitações
           </Heading>
           <Text
             color='gray.200'
           >
-            3
+            {ordens.length}
           </Text>
         </HStack>
 
