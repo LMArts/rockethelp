@@ -7,24 +7,23 @@ import Logo from '../../../assets/logo_secondary.svg';
 import { Filters } from '../../../components/filters';
 import { Orders, OrderProps } from '../../../components/orders';
 import { Button } from '../../../components/button';
+import { Loading } from '../../../components/loading';
 
 type IHomeProps = {
   logout: () => void;
+  statusChange: (status: string) => void;
+  status: string;
+  loading: boolean;
+  orderData: Array<OrderProps>
 }
 
 export function Home({
-  logout
+  logout,
+  statusChange,
+  status,
+  loading,
+  orderData
 }: IHomeProps) {
-
-  const [statusSelect, setStatusSelect] = useState<'open' | 'closed'>('open');
-  const [ordens, setOrdens] = useState<OrderProps[]>([
-    {
-      id: '123',
-      patrimony: '12345',
-      when: '18/07/2022 às 22:00',
-      status: 'open'
-    }
-  ])
 
   const navigation = useNavigation();
   const {colors} = useTheme();
@@ -69,7 +68,7 @@ export function Home({
           <Text
             color='gray.200'
           >
-            {ordens.length}
+            {orderData.length}
           </Text>
         </HStack>
 
@@ -77,34 +76,39 @@ export function Home({
           <Filters
             type='open'
             title='Em andamento'
-            onPress={()=> setStatusSelect('open')}
-            isActive={statusSelect === 'open'}
+            onPress={()=>statusChange('open')}
+            isActive={status === 'open'}
           />
 
           <Filters
             type='closed'
             title='Finalizados'
-            onPress={()=>setStatusSelect('closed')}
-            isActive={statusSelect === 'closed'}
+            onPress={()=>statusChange('closed')}
+            isActive={status === 'closed'}
           />
         </HStack>
 
-        <FlatList
-          data={ordens}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => <Orders data={item} onPress={()=>handleNavigationDetails(item.id)}/>}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 10}}
-          ListEmptyComponent={()=> (
-            <Center>
-              <Icon size={10} as={<Ionicons name='chatbubbles-outline' color={colors.gray[300]} />} />
-              <Text color={colors.gray[300]} fontSize='md' mt={4} textAlign='center'>
-                Você ainda não possui {'\n'} 
-                solicitações {statusSelect === 'open' ? 'em andamento' : 'finalizadas'}
-              </Text>
-            </Center>
-          )}
-        />
+        {
+          loading?
+          <Loading/>
+          :
+          <FlatList
+            data={orderData}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => <Orders data={item} onPress={()=>handleNavigationDetails(item.id)}/>}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{paddingBottom: 10}}
+            ListEmptyComponent={()=> (
+              <Center>
+                <Icon size={10} as={<Ionicons name='chatbubbles-outline' color={colors.gray[300]} />} />
+                <Text color={colors.gray[300]} fontSize='md' mt={4} textAlign='center'>
+                  Você ainda não possui {'\n'} 
+                  solicitações {status === 'open' ? 'em andamento' : 'finalizadas'}
+                </Text>
+              </Center>
+            )}
+          />
+        }
 
         <Button title='Nova solicitação' onPress={()=>handleNavigationRegister()}/>
 

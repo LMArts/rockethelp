@@ -1,4 +1,4 @@
-import { useSafeArea, VStack } from 'native-base';
+import { VStack } from 'native-base';
 import { useState } from 'react';
 import { Button } from '../../../../components/button';
 
