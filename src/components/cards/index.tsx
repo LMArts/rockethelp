@@ -22,7 +22,7 @@ export function Cards({
   
   return (
     <VStack 
-      bg='gray.700'
+      bg='gray.600'
       p={5}
       mt={5}
       rounded='sm'
@@ -40,34 +40,32 @@ export function Cards({
         >
           {title}
         </Text>
-
-        {
-          !!description && 
-          <Text color='gray.100' fontSize='md'>
-            {description}
-          </Text>
-        }
-
-        {children}
-
-        {
-          !!footer &&
-          <Box
-            borderTopWidth={1}
-            borderTopColor='gray.400'
-            mt={3}
-          >
-            <Text
-              mt={3}
-              color='gray.300'
-              fontSize='sm'
-            >
-              {footer}
-            </Text>
-          </Box>
-        }
       </HStack>
+      {
+        !!description && 
+        <Text color='gray.100' fontSize='md'>
+          {description}
+        </Text>
+      }
 
+      {children}
+
+      {
+        !!footer &&
+        <Box
+          borderTopWidth={1}
+          borderTopColor='gray.400'
+          mt={3}
+        >
+          <Text
+            mt={3}
+            color='gray.300'
+            fontSize='sm'
+          >
+            {footer}
+          </Text>
+        </Box>
+      }
     </VStack>
   );
 }

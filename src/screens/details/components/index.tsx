@@ -40,7 +40,7 @@ export function Details({
         title='Solicitação'
       />
 
-      <HStack bg='gray.500' justifyContent='center' p={4}>
+      <HStack bg='gray.500' justifyContent='center' alignItems='center' p={4}>
         {
           orderDetailData.status === 'closed'
           ? <AntDesign name='checkcircle' color={statusColor} size={20} />
