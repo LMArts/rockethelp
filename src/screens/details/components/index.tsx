@@ -1,4 +1,4 @@
-import { HStack, ScrollView, Text, useTheme, VStack } from 'native-base';
+import { Box, HStack, ScrollView, Text, useTheme, VStack } from 'native-base';
 import {AntDesign, MaterialCommunityIcons} from '@expo/vector-icons';
 import {DesktopTower, Clipboard, CircleWavyCheck} from 'phosphor-react-native';
 
@@ -8,6 +8,7 @@ import { OrderProps } from '../../../components/orders';
 import { Cards } from '../../../components/cards';
 import { Input } from '../../../components/input';
 import { Button } from '../../../components/button';
+import { useState } from 'react';
 
 export type OrderDetails = OrderProps & {
   description: string;
@@ -18,13 +19,15 @@ export type OrderDetails = OrderProps & {
 type IDetailsProp = {
   orderDetailData: OrderDetails;
   loading: boolean;
-  solution?: string;
+  solution: (solution: string) => void;
+  loadingClose: boolean;
 }
 
 export function Details({
   loading,
   orderDetailData,
-  solution
+  solution,
+  loadingClose
 }: IDetailsProp) {
 
   if(loading){
@@ -33,12 +36,15 @@ export function Details({
 
   const {colors} = useTheme();
   const statusColor = orderDetailData.status === 'open' ? colors.secondary[700] : colors.green[300];
+  const [solutionText, setSolutionText] = useState('');
 
   return (
     <VStack flex={1} bg='gray.700'>
-      <Header
-        title='Solicitação'
-      />
+      <Box px={6} bg='gray.600'>
+        <Header
+          title='Solicitação'
+        />
+      </Box>
 
       <HStack bg='gray.500' justifyContent='center' alignItems='center' p={4}>
         {
@@ -75,14 +81,20 @@ export function Details({
           <Cards
             title='solução'
             icon={CircleWavyCheck}
+            description={orderDetailData.solution}
             footer={orderDetailData.closed && `Encerrado em ${orderDetailData.closed}`}
           >
-            <Input
-              placeholder='Descrição da solução' 
-              h={24}
-              textAlignVertical='top'
-              multiline
-            />
+            {
+              orderDetailData.status === 'open' && (
+                <Input
+                  placeholder='Descrição da solução' 
+                  h={24}
+                  textAlignVertical='top'
+                  multiline
+                  onChangeText={setSolutionText}
+                />
+              )
+            }
           </Cards>
       </ScrollView>
 
@@ -91,6 +103,8 @@ export function Details({
         <Button
           title='Encerrar solicitação'
           m={5}
+          onPress={()=>solution(solutionText)}
+          isLoading={loadingClose}
         />
       }
     </VStack>
