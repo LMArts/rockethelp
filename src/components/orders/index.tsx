@@ -50,8 +50,8 @@ export function Orders({
         <Circle bg='gray.500' h={12} w={12} mr={5}>
           {
             data.status === 'closed'
-            ? <Icon size={5} as={<AntDesign name='checkcircle' color={statusColor} />} />
-            : <Icon size={5} as={<MaterialCommunityIcons name='timer-sand-empty' color={statusColor} />} />
+            ? <AntDesign name='checkcircle' color={statusColor} size={20} />
+            : <MaterialCommunityIcons name='timer-sand-empty' color={statusColor} size={20}/>
           }
         </Circle>
       </HStack>

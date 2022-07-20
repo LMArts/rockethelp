@@ -21,7 +21,7 @@ export function HomeScreen() {
     })
   }
 
-  const handleChangeStatus = (status: any) => {
+  const handleChangeStatus = (status: 'open' | 'closed') => {
     setStatusSelect(status);
   }
 
