@@ -1,6 +1,6 @@
 import { Box, HStack, ScrollView, Text, useTheme, VStack } from 'native-base';
 import {AntDesign, MaterialCommunityIcons} from '@expo/vector-icons';
-import {DesktopTower, Clipboard, CircleWavyCheck} from 'phosphor-react-native';
+import {DesktopTower, ClipboardText, CircleWavyCheck} from 'phosphor-react-native';
 
 import { Header } from '../../../components/header';
 import { Loading } from '../../../components/loading';
@@ -71,12 +71,12 @@ export function Details({
             title='equipamento'
             description={`Patrimônio: ${orderDetailData.patrimony}`}
             icon={DesktopTower}
-            footer={orderDetailData.when}
           />
           <Cards
             title='descrição do problema'
             description={orderDetailData.description}
-            icon={Clipboard}
+            icon={ClipboardText}
+            footer={`Registrado em ${orderDetailData.when}`}
           />
           <Cards
             title='solução'
