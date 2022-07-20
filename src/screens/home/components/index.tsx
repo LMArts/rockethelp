@@ -8,7 +8,13 @@ import { Filters } from '../../../components/filters';
 import { Orders, OrderProps } from '../../../components/orders';
 import { Button } from '../../../components/button';
 
-export function Home() {
+type IHomeProps = {
+  logout: () => void;
+}
+
+export function Home({
+  logout
+}: IHomeProps) {
 
   const [statusSelect, setStatusSelect] = useState<'open' | 'closed'>('open');
   const [ordens, setOrdens] = useState<OrderProps[]>([
@@ -46,7 +52,7 @@ export function Home() {
         px={6}
       >
         <Logo/>
-        <IconButton icon={<Entypo name='log-out' color={colors.gray[300]} size={18} />} />
+        <IconButton icon={<Entypo name='log-out' color={colors.gray[300]} size={18} />} onPress={()=>logout()} />
       </HStack>
 
       <VStack flex={1} px={6}>
